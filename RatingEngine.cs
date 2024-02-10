@@ -27,9 +27,20 @@ namespace passportcard
             // load policy - open file policy.json
             string policyJson = File.ReadAllText("policy.json");
             PolicyType? policyType = GetPolicyType(policyJson);
+            Policy?  policy = GetPolicyByPolicyType(policyJson, policyType);
 
+            if (policy != null)
+            {
+                policy._logger = _logger;
+                Rating = policy.Rating();
+            }
+
+            _logger.log("Rating completed.");
+        }
+
+        private Policy? GetPolicyByPolicyType(string policyJson, PolicyType? policyType)
+        {
             Policy? policy = null;
-
             switch (policyType)
             {
                 case PolicyType.Health:
@@ -49,13 +60,7 @@ namespace passportcard
                     break;
             }
 
-            if (policy != null)
-            {
-                policy._logger = _logger;
-                Rating = policy.Rating();
-            }
-
-            _logger.log("Rating completed.");
+            return policy;
         }
 
         private PolicyType? GetPolicyType(string policyJson)
