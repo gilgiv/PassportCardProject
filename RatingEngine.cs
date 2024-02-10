@@ -27,7 +27,7 @@ namespace passportcard
             // load policy - open file policy.json
             string policyJson = File.ReadAllText("policy.json");
             PolicyType? policyType = GetPolicyType(policyJson);
-            Policy?  policy = GetPolicyByPolicyType(policyJson, policyType);
+            Policy? policy = GetPolicyByPolicyType(policyJson, policyType);
 
             if (policy != null)
             {
